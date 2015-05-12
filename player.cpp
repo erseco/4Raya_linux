@@ -1,12 +1,20 @@
 /******************************************************************************
 *
 * Inteligencia Artificial
-* Grado en Ingenier韆 Inform醫ica
+* Grado en Ingenier铆a Inform谩tica
 *
 * 2014 - Ernesto Serrano Collado <erseco@correo.ugr.es>
 * -----------------------------------------------------
 *
 * Codigo fuente del agente
+* 
+* Estan implementados los algorimos:
+* 
+* - MiniMax
+* - AlfaBeta
+* - NegaMax
+* - NegaMaxAlfaBeta
+* - NegaScout
 *
 ******************************************************************************/
 #include <iostream>
@@ -166,7 +174,7 @@ int ComprobarAdyacentes(const Environment &estado, int jugador, int nivel) {
 // Funcion heuristica (ESTA ES LA QUE TENEIS QUE MODIFICAR)
 double Valoracion(const Environment &estado, int jugador){
 
-	// La valoracion es un n鷐ero resultante de la suma de:
+	// La valoracion es un n煤mero resultante de la suma de:
 	// total de 4 en raya * 1000000) + total de 3 en raya * 100 + total de 2 en raya * 10
 	// al que le restamos:
 	// total de 4 en raya del opuesto * 10000000, el total de 3 en raya del opuesto * 100 y el total de 2 en raya del opuesto * 10
@@ -186,7 +194,7 @@ double Valoracion(const Environment &estado, int jugador){
 	int treses_opuesto =  ComprobarAdyacentes(estado, jugador_opuesto, 3);
 	int doses_opuesto =   ComprobarAdyacentes(estado, jugador_opuesto, 2);
 
-	// Calculamos el valor heur韘tico del tablero
+	// Calculamos el valor heur铆stico del tablero
 	//return (cuatros*100000 + treses*100 + doses*10);
 	//return (cuatros*100000 + treses*100 + doses*10 + unos);
 	return (((cuatros*1000000 + treses*100 + doses*10) - cuatros_opuesto*10000000) - treses_opuesto*100) - doses_opuesto*10;
@@ -197,7 +205,7 @@ double Valoracion(const Environment &estado, int jugador){
 // Funcion de valoracion para testear Poda Alfabeta
 double ValoracionTest(const Environment &estado, int jugador){
 
-	// Devolvemos la valoraci髇 de nuestra heur韘tica
+	// Devolvemos la valoraci贸n de nuestra heur铆stica
 	return Valoracion(estado, jugador);
 
 	// AQUI NO ENTRA PORQUE ME LO SALTO CON MI HEURISTICA!!!
@@ -238,7 +246,7 @@ Environment::ActionType Player::Think(){
 	const int PROFUNDIDAD_MINIMAX = 6;  // Umbral maximo de profundidad para el metodo MiniMax
 	const int PROFUNDIDAD_ALFABETA = 8; // Umbral maximo de profundidad para la poda Alfa_Beta
 
-	Environment::ActionType accion; // acci髇 que se va a devolver
+	Environment::ActionType accion; // acci贸n que se va a devolver
 	bool aplicables[7]; // Vector bool usado para obtener las acciones que son aplicables en el estado actual. La interpretacion es
 						// aplicables[0]==true si PUT1 es aplicable
 						// aplicables[1]==true si PUT2 es aplicable
@@ -318,7 +326,7 @@ Environment::ActionType Player::Think(){
 	//valor = NegaMaxAlfaBeta(actual_, jugador_, 0, PROFUNDIDAD_MINIMAX, accion, INF_DOWN, INF_TOP);
 	//valor = NegaScout(actual_, jugador_, 0, PROFUNDIDAD_MINIMAX, accion, INF_DOWN, INF_TOP);
 
-	// Algoritmos con poda y la profundidad m醲ima permitida
+	// Algoritmos con poda y la profundidad m谩xima permitida
 	valor = AlfaBeta(actual_, jugador_, 0, PROFUNDIDAD_ALFABETA, accion, INF_DOWN, INF_TOP);
 	//valor = NegaMaxAlfaBeta(actual_, jugador_, 0, PROFUNDIDAD_ALFABETA, accion, INF_DOWN, INF_TOP);
 	//valor = NegaScout(actual_, jugador_, 0, PROFUNDIDAD_ALFABETA, accion, INF_DOWN, INF_TOP);
@@ -339,7 +347,7 @@ Environment::ActionType Player::Think(){
 //  ------     AQUI EMPIEZAN MIS ALGORITMOS   -----------
 
 /******************************************************************************/
-// Implementaci髇 del algoritmo Minimax
+// Implementaci贸n del algoritmo Minimax
 double Player::MiniMax(const Environment & tablero, int jugador, int profundidad, int profundidad_maxima, Environment::ActionType & accion) {
 
 	contador++; // Contador para comprobar el numero de nodos comprobados
@@ -405,7 +413,7 @@ double Player::MiniMax(const Environment & tablero, int jugador, int profundidad
 }
 
 /******************************************************************************/
-// Implementaci髇 de la poda alfa-beta (la que se pide en la pr醕tica)
+// Implementaci贸n de la poda alfa-beta (la que se pide en la pr谩ctica)
 double Player::AlfaBeta(const Environment & tablero, int jugador, int profundidad, int profundidad_maxima, Environment::ActionType & accion, double alfa, double beta) {
 
 
@@ -478,7 +486,7 @@ double Player::AlfaBeta(const Environment & tablero, int jugador, int profundida
 }
 
 /******************************************************************************/
-// Implementaci髇 del algoritmo Negamax
+// Implementaci贸n del algoritmo Negamax
 double Player::NegaMax(const Environment & tablero, int jugador, int profundidad, int profundidad_maxima, Environment::ActionType & accion) {
 
 	contador++; // Contador para comprobar el numero de nodos comprobados
@@ -520,7 +528,7 @@ double Player::NegaMax(const Environment & tablero, int jugador, int profundidad
 }
 
 /******************************************************************************/
-// Implementaci髇 del algoritmo Negamax con poda alfa-beta
+// Implementaci贸n del algoritmo Negamax con poda alfa-beta
 double Player::NegaMaxAlfaBeta(const Environment & tablero, int jugador, int profundidad, int profundidad_maxima, Environment::ActionType & accion, double alfa, double beta) {
 
 	contador++; // Contador para comprobar el numero de nodos comprobados
@@ -573,7 +581,7 @@ double Player::NegaMaxAlfaBeta(const Environment & tablero, int jugador, int pro
 }
 
 /******************************************************************************/
-// Implementaci髇 del algoritmo Negascout
+// Implementaci贸n del algoritmo Negascout
 double Player::NegaScout(const Environment & tablero, int jugador, int profundidad, int profundidad_maxima, Environment::ActionType & accion, double alfa, double beta) {
 
 	contador++; // Contador para comprobar el numero de nodos comprobados
