@@ -7,6 +7,14 @@
 * -----------------------------------------------------
 *
 * Cabecera del agente
+* 
+* Estan implementados los algoritmos:
+* 
+* - MiniMax
+* - AlfaBeta
+* - NegaMax
+* - NegaMaxAlfaBeta
+* - NegaScout
 *
 ******************************************************************************/
 #ifndef PLAYER_H
